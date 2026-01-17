@@ -1,7 +1,7 @@
-"use client";
-import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "motion/react";
-import React, { useEffect, useState } from "react";
+'use client';
+import { cn } from '@/lib/utils';
+import { motion, AnimatePresence, Variants } from 'motion/react';
+import React, { useEffect, useState } from 'react';
 
 export const ImagesSlider = ({
   images,
@@ -10,7 +10,7 @@ export const ImagesSlider = ({
   overlayClassName,
   className,
   autoplay = true,
-  direction = "up",
+  direction = 'up',
 }: {
   images: string[];
   children: React.ReactNode;
@@ -18,7 +18,7 @@ export const ImagesSlider = ({
   overlayClassName?: string;
   className?: string;
   autoplay?: boolean;
-  direction?: "up" | "down";
+  direction?: 'up' | 'down';
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -56,18 +56,18 @@ export const ImagesSlider = ({
         setLoadedImages(loadedImages as string[]);
         setLoading(false);
       })
-      .catch((error) => console.error("Failed to load images", error));
+      .catch((error) => console.error('Failed to load images', error));
   };
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "ArrowRight") {
+      if (event.key === 'ArrowRight') {
         handleNext();
-      } else if (event.key === "ArrowLeft") {
+      } else if (event.key === 'ArrowLeft') {
         handlePrevious();
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
 
     // autoplay
     let interval: any;
@@ -78,12 +78,12 @@ export const ImagesSlider = ({
     }
 
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener('keydown', handleKeyDown);
       clearInterval(interval);
     };
   }, []);
 
-  const slideVariants = {
+  const slideVariants: Variants = {
     initial: {
       scale: 0,
       opacity: 0,
@@ -95,19 +95,19 @@ export const ImagesSlider = ({
       opacity: 1,
       transition: {
         duration: 0.5,
-        ease: [0.645, 0.045, 0.355, 1.0],
+        ease: [0.645, 0.045, 0.355, 1],
       },
     },
     upExit: {
       opacity: 1,
-      y: "-150%",
+      y: '-150%',
       transition: {
         duration: 1,
       },
     },
     downExit: {
       opacity: 1,
-      y: "150%",
+      y: '150%',
       transition: {
         duration: 1,
       },
@@ -119,17 +119,17 @@ export const ImagesSlider = ({
   return (
     <div
       className={cn(
-        "overflow-hidden h-full w-full relative flex items-center justify-center",
+        'overflow-hidden h-full w-full relative flex items-center justify-center',
         className
       )}
       style={{
-        perspective: "1000px",
+        perspective: '1000px',
       }}
     >
       {areImagesLoaded && children}
       {areImagesLoaded && overlay && (
         <div
-          className={cn("absolute inset-0 bg-black/10 z-40", overlayClassName)}
+          className={cn('absolute inset-0 bg-black/10 z-40', overlayClassName)}
         />
       )}
 
@@ -140,7 +140,7 @@ export const ImagesSlider = ({
             src={loadedImages[currentIndex]}
             initial="initial"
             animate="visible"
-            exit={direction === "up" ? "upExit" : "downExit"}
+            exit={direction === 'up' ? 'upExit' : 'downExit'}
             variants={slideVariants}
             className="image h-full w-full absolute inset-0 object-cover object-center"
           />
