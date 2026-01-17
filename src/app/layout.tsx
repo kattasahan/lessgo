@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme/theme-provider';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import { PNavbar } from '@/components/app/navbar';
 
@@ -40,6 +41,7 @@ export default function RootLayout({
             </main>
           </div>
         </ThemeProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
