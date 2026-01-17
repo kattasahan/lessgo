@@ -10,7 +10,7 @@ import { useTheme } from 'next-themes';
 
 export function ToggleTheme() {
   const { theme, setTheme } = useTheme();
-  console.log("dfkj")
+
   return (
     <Tooltip>
       <TooltipTrigger asChild>

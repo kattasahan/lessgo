@@ -7,6 +7,8 @@ import {
   useScroll,
   useMotionValueEvent,
 } from 'motion/react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import React, { useRef, useState } from 'react';
 
@@ -102,7 +104,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         minWidth: '800px',
       }}
       className={cn(
-        'relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full bg-transparent px-4 py-2 lg:flex dark:bg-transparent',
+        'relative z-60 mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full bg-transparent px-4 py-2 lg:flex dark:bg-transparent',
         visible && 'bg-white/80 dark:bg-neutral-950/80',
         className
       )}
@@ -114,6 +116,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
 
 export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
   const [hovered, setHovered] = useState<number | null>(null);
+  const pathname = usePathname();
 
   return (
     <motion.div
@@ -123,23 +126,50 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
         className
       )}
     >
-      {items.map((item, idx) => (
-        <a
-          onMouseEnter={() => setHovered(idx)}
-          onClick={onItemClick}
-          className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
-          key={`link-${idx}`}
-          href={item.link}
-        >
-          {hovered === idx && (
-            <motion.div
-              layoutId="hovered"
-              className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
-            />
-          )}
-          <span className="relative z-20">{item.name}</span>
-        </a>
-      ))}
+      {items.map(
+        (item, idx) => {
+          const isActive = pathname === item.link;
+          return (
+            <a
+              onMouseEnter={() => setHovered(idx)}
+              onClick={onItemClick}
+              className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
+              key={`link-${idx}`}
+              href={item.link}
+            >
+              {hovered === idx && (
+                <motion.div
+                  layoutId="hovered"
+                  className={cn(
+                    'absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800'
+                  )}
+                />
+              )}
+              <span
+                className={cn('relative z-20', `${isActive && 'text-primary font-semibold'}`)}
+              >
+                {item.name}
+              </span>
+            </a>
+          );
+        }
+        // <Link
+        //   onMouseEnter={() => setHovered(idx)}
+        //   onClick={onItemClick}
+        //   className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
+        //   key={`link-${idx}`}
+        //   href={item.link}
+        //   passHref
+        // >
+        //   {hovered === idx && (
+        //     <motion.div
+        //       layoutId="hovered"
+        //       className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
+        //     />
+        //   )}
+        //   <span className="relative z-20">{item.name}</span>
+        // </Link>
+      )}
     </motion.div>
   );
 };
@@ -232,10 +262,12 @@ export const MobileNavToggle = ({
 export const NavbarLogo = () => {
   return (
     <a
-      href="/"
+      href="/#"
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
     >
-      <span className="font-medium text-2xl text-black dark:text-white">peesey</span>
+      <span className="font-medium text-2xl text-black dark:text-white">
+        peesey
+      </span>
     </a>
   );
 };
@@ -262,7 +294,7 @@ export const NavbarButton = ({
 
   const variantStyles = {
     primary:
-      'shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]',
+      'bg-black text-white shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] dark:bg-white dark:text-black dark:shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]',
     secondary: 'bg-transparent shadow-none dark:text-white',
     dark: 'bg-black text-white shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]',
     gradient:

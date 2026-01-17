@@ -1,17 +1,19 @@
-import { PNavbar } from '@/components/app/navbar';
+import { Hero } from '@/components/app/Home/hero';
+import TopSellers from '@/components/app/Home/top-sellers';
+import NewArrivals from './new-arrivals/page';
+import { Testimonials } from '@/components/app/Home/testimonials';
+import Faq from '@/components/app/Home/faq';
+import Footer from '@/components/app/Footer/footer';
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <div className="w-full lg:px-30">
-        <div className="relative bg-white dark:bg-black">
-          <PNavbar />
-          <main className="h-[200vh] py-32 px-16 sm:items-start">
-            
-          </main>
-        </div>
-      </div>
-    </div>
-    // </>
+    <>
+      <Hero />
+      <TopSellers />
+      <NewArrivals />
+      <Testimonials />
+      <Faq />
+      <Footer />
+    </>
   );
 }
